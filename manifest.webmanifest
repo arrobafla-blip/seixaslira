@@ -1,0 +1,15 @@
+{
+  "id": "./",
+  "name": "seixaslira — Planner da família",
+  "short_name": "seixaslira",
+  "description": "Um planner familiar acolhedor para organizar o dia a dia.",
+  "lang": "pt-BR",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#fffcf5",
+  "theme_color": "#f6df83",
+  "icons": [
+    { "src": "./icons/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+  ]
+}

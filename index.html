@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f6df83">
+  <meta name="description" content="Planner familiar SeixasLira">
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="icon" href="./icons/icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./styles.css">
+  <title>seixaslira — Nosso dia</title>
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <a class="brand" href="#" aria-label="seixaslira início">
+        <span class="brand-mark" aria-hidden="true">s.</span>
+        <span><strong>seixaslira</strong><small>planner da família</small></span>
+      </a>
+      <div class="date-chip" id="todayLabel">Nosso dia</div>
+    </header>
+
+    <main>
+      <section class="welcome">
+        <div>
+          <p class="eyebrow">UM PASSO DE CADA VEZ</p>
+          <h1>Oi, família.</h1>
+          <p class="welcome-copy">Vamos organizar o dia com calma?</p>
+        </div>
+        <div class="sun-illustration" aria-hidden="true"><span>☼</span></div>
+      </section>
+
+      <nav class="nav-tabs" aria-label="Seções do planner">
+        <button class="nav-tab active" data-view="today">Nosso dia</button>
+        <button class="nav-tab" data-view="tasks">Tarefas</button>
+        <button class="nav-tab" data-view="market">Mercado</button>
+        <button class="nav-tab" data-view="zoe">ZOE</button>
+        <button class="nav-tab" data-view="notes">Notas</button>
+      </nav>
+
+      <section class="summary-grid" id="summaryGrid">
+        <article class="summary-card yellow">
+          <span class="summary-label">Tarefas concluídas</span>
+          <strong id="completedCount">0/0</strong>
+          <div class="progress-track"><span id="progressBar"></span></div>
+        </article>
+        <article class="summary-card cream">
+          <span class="summary-label">Na lista do mercado</span>
+          <strong id="marketCount">0 itens</strong>
+          <span class="summary-foot">Tudo anotado em um só lugar.</span>
+        </article>
+      </section>
+
+      <section class="view active" id="view-today">
+        <div class="section-heading">
+          <div><p class="eyebrow">PRIORIDADES</p><h2>Para hoje</h2></div>
+          <button class="button button-dark" data-goto="tasks">Ver tarefas <span aria-hidden="true">↗</span></button>
+        </div>
+        <div id="todayTasks" class="task-list"></div>
+        <div class="empty-hint" id="todayEmpty" hidden>Nenhuma tarefa por aqui. Aproveite esse respiro ou adicione uma nova.</div>
+        <div class="soft-note"><span aria-hidden="true">✳</span><p><strong>Um lembrete gentil</strong><br>Não precisa fazer tudo de uma vez. O importante é encontrar um ritmo que funcione para vocês.</p></div>
+      </section>
+
+      <section class="view" id="view-tasks">
+        <div class="section-heading"><div><p class="eyebrow">ORGANIZAÇÃO DA FAMÍLIA</p><h2>Tarefas</h2></div></div>
+        <form id="taskForm" class="add-form">
+          <label class="sr-only" for="taskTitle">Nome da tarefa</label>
+          <input id="taskTitle" name="title" maxlength="140" placeholder="O que precisamos fazer?" required>
+          <select id="taskOwner" aria-label="Responsável">
+            <option>Eu</option><option>Meu marido</option><option>Nós dois</option><option>ZOE</option>
+          </select>
+          <button class="button button-dark" type="submit">Adicionar</button>
+        </form>
+        <div class="filters">
+          <label for="taskFilter">Mostrar</label>
+          <select id="taskFilter"><option value="all">Todas</option><option value="pending">Pendentes</option><option value="done">Concluídas</option></select>
+          <label for="ownerFilter">Responsável</label>
+          <select id="ownerFilter"><option value="all">Todos</option><option>Eu</option><option>Meu marido</option><option>Nós dois</option><option>ZOE</option></select>
+        </div>
+        <div id="allTasks" class="task-list"></div>
+        <div class="empty-hint" id="tasksEmpty" hidden>Você ainda não adicionou tarefas.</div>
+      </section>
+
+      <section class="view" id="view-market">
+        <div class="section-heading"><div><p class="eyebrow">LISTA COMPARTILHADA NO SEU DISPOSITIVO</p><h2>Mercado</h2></div></div>
+        <form id="marketForm" class="add-form">
+          <label class="sr-only" for="marketTitle">Produto</label>
+          <input id="marketTitle" maxlength="100" placeholder="Adicionar produto..." required>
+          <input id="marketQty" class="quantity-input" maxlength="30" placeholder="Qtd.">
+          <button class="button button-dark" type="submit">Adicionar</button>
+        </form>
+        <div class="list-subhead"><span>PENDENTES</span><span id="marketPendingCount">0</span></div>
+        <div id="marketPending" class="task-list"></div>
+        <div class="list-subhead"><span>JÁ COLOCAMOS NO CARRINHO</span><button class="text-button" id="clearBought" type="button">Limpar comprados</button></div>
+        <div id="marketBought" class="task-list"></div>
+      </section>
+
+      <section class="view" id="view-zoe">
+        <div class="section-heading"><div><p class="eyebrow">UM ESPAÇO ESPECIAL</p><h2>ZOE</h2></div></div>
+        <p class="intro-copy">Rotinas, passeios e pequenas coisas para lembrar.</p>
+        <form id="zoeForm" class="add-form">
+          <label class="sr-only" for="zoeTitle">Atividade da ZOE</label>
+          <input id="zoeTitle" maxlength="140" placeholder="Adicionar atividade ou lembrete..." required>
+          <button class="button button-dark" type="submit">Adicionar</button>
+        </form>
+        <div id="zoeTasks" class="task-list"></div>
+        <div class="soft-note"><span aria-hidden="true">♡</span><p>Este espaço é administrado pelos adultos. Evite registrar dados pessoais ou sensíveis desnecessários.</p></div>
+      </section>
+
+      <section class="view" id="view-notes">
+        <div class="section-heading"><div><p class="eyebrow">ANOTE ANTES QUE ESCAPE</p><h2>Notas da família</h2></div></div>
+        <label class="note-label" for="familyNotes">Ideias, lembretes e assuntos para conversar</label>
+        <textarea id="familyNotes" rows="8" maxlength="5000" placeholder="Escreva aqui..."></textarea>
+        <p class="save-status" id="noteStatus" aria-live="polite">As notas são salvas neste navegador.</p>
+      </section>
+    </main>
+
+    <footer>
+      <p>Feito para a vida real, com carinho.</p>
+      <p class="privacy-note">Versão inicial · dados salvos localmente neste dispositivo</p>
+    </footer>
+  </div>
+
+  <dialog id="editDialog">
+    <form method="dialog" id="editForm" class="edit-form">
+      <h2>Editar tarefa</h2>
+      <label for="editTitle">Título</label>
+      <input id="editTitle" maxlength="140" required>
+      <label for="editOwner">Responsável</label>
+      <select id="editOwner"><option>Eu</option><option>Meu marido</option><option>Nós dois</option><option>ZOE</option></select>
+      <div class="dialog-actions">
+        <button class="button button-light" value="cancel">Cancelar</button>
+        <button class="button button-dark" id="saveEdit" value="save">Salvar alterações</button>
+      </div>
+    </form>
+  </dialog>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script src="./app.js" defer></script>
+  <script>
+    if ('serviceWorker' in navigator && location.protocol !== 'file:') {
+      window.addEventListener('load', () => navigator.serviceWorker.register('./sw.js').catch(() => {}));
+    }
+  </script>
+</body>
+</html>
